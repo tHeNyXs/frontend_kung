@@ -2,12 +2,12 @@
   "version": 2,
   "env": {
     "GEMINI_API_KEY": "GEMINI_API_KEY",
-    "NEXT_PUBLIC_API_URL": "https://web-production-7909d.up.railway.app"
+    "NEXT_PUBLIC_API_URL": "https://web-production-25db.up.railway.app"
   },
   "build": {
     "env": {
       "GEMINI_API_KEY": "GEMINI_API_KEY",
-      "NEXT_PUBLIC_API_URL": "https://web-production-7909d.up.railway.app"
+      "NEXT_PUBLIC_API_URL": "https://web-production-25db.up.railway.app"
     }
   },
   "routes": [
