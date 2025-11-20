@@ -79,7 +79,7 @@ export default function LoginPage() {
                     <div className="input-inner">
                       <input
                         type="tel"
-                        placeholder="เบอร์โทรศัพท์"
+                        placeholder="Phone number"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         className="phone-input"
@@ -99,7 +99,7 @@ export default function LoginPage() {
                     <div className="input-inner">
                       <input
                         type="password"
-                        placeholder="รหัสผ่าน"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="password-input"
