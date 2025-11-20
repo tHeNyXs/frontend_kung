@@ -148,8 +148,8 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
           {alerts.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-green-500 text-6xl mb-4">✅</div>
-              <p className="text-xl text-[#1c170d] font-medium">ไม่มีแจ้งเตือนที่ยังไม่อ่าน</p>
-              <p className="text-sm text-gray-600 mt-2">ทุกอย่างเรียบร้อยดี!</p>
+              <p className="text-xl text-[#1c170d] font-medium">No unread notifications</p>
+              <p className="text-sm text-gray-600 mt-2">Everything is fine!</p>
             </div>
           ) : (
             <>

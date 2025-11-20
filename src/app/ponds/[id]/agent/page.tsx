@@ -23,14 +23,14 @@ export default function AgentPage() {
   // Fallback pond data if not found
   const fallbackPond = {
     id: parseInt(pondId),
-    name: `บ่อ ${pondId}`,
-    size: 'ไม่ระบุ',
-    date: 'ไม่ระบุ',
-    dimensions: 'ไม่ระบุ',
-    depth: 'ไม่ระบุ',
-    shrimp_count: 'ไม่ระบุ',
-    location: 'ไม่ระบุ',
-    notes: 'ข้อมูลบ่อไม่พร้อมใช้งาน'
+    name: `Pond ${pondId}`,
+    size: 'Not specified',
+    date: 'Not specified',
+    dimensions: 'Not specified',
+    depth: 'Not specified',
+    shrimp_count: 'Not specified',
+    location: 'Not specified',
+    notes: 'Pond data not available'
   }
   
   const currentPond = pond || fallbackPond
@@ -51,29 +51,31 @@ export default function AgentPage() {
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const suggestedQuestions = [
-    `บ่อ ${currentPond?.name || 'ของฉัน'} มีปัญหาอะไรบ้าง?`,
-    `ควรจัดการน้ำในบ่อ ${currentPond?.name || 'ของฉัน'} อย่างไร?`,
-    `กุ้งในบ่อ ${currentPond?.name || 'ของฉัน'} โตเร็วหรือไม่?`,
-    `มีวิธีป้องกันโรคกุ้งในบ่อ ${currentPond?.name || 'ของฉัน'} ไหม?`,
-    `บ่อ ${currentPond?.name || 'ของฉัน'} ควรให้อาหารกุ้งอย่างไร?`,
-    `บ่อ ${currentPond?.name || 'ของฉัน'} ควรเปลี่ยนน้ำเมื่อไหร่?`
-  ]
+ const suggestedQuestions = [
+  `What’s going on in pond ${currentPond?.name}?`,
+  `How should I manage the water in pond ${currentPond?.name}?`,
+  `Are the shrimp in pond ${currentPond?.name} growing well?`,
+  `How can I prevent diseases in pond ${currentPond?.name}?`,
+  `What’s the best way to feed the shrimp in pond ${currentPond?.name}?`,
+  `When should I change the water in pond ${currentPond?.name}?`
+]
+
 
   useEffect(() => {
     // Add a welcome message when the component mounts
-    const pondInfo = currentPond ? `
-บ่อ: ${currentPond.name}
-ขนาด: ${currentPond.size || 'ไม่ระบุ'} ไร่
-วันที่ลงบ่อ: ${currentPond.date || 'ไม่ระบุ'}
-จำนวนกุ้ง: ${currentPond.shrimp_count || 'ไม่ระบุ'} ตัว
-ความลึก: ${currentPond.depth || 'ไม่ระบุ'} เมตร
-` : 'ข้อมูลบ่อไม่พร้อมใช้งาน'
+  const pondInfo = currentPond ? `
+  Pond: ${currentPond.name}
+  Size: ${currentPond.size || 'Not specified'} rai
+  Stocking Date: ${currentPond.date || 'Not specified'}
+  Shrimp Count: ${currentPond.shrimp_count || 'Not specified'}
+  Depth: ${currentPond.depth || 'Not specified'} m
+  ` : 'Pond data unavailable'
+
 
     setMessages([
       {
         id: 1,
-        content: `สวัสดีครับ! ผมคือผู้ช่วย AI ของคุณ\n\nข้อมูลบ่อปัจจุบัน:\n${pondInfo}\nมีอะไรให้ช่วยไหมครับ?`,
+        content: `Hello! I’m your AI assistant. Here’s the current pond information: ${pondInfo} How can I help you today?`,
         type: 'assistant',
         timestamp: new Date()
       }
@@ -142,7 +144,7 @@ export default function AgentPage() {
         
         const errorMessage: Message = {
           id: messages.length + 2,
-          content: `เกิดข้อผิดพลาด: ${errorData?.error?.message || response.statusText} (${response.status})`,
+          content: `Error: ${errorData?.error?.message || response.statusText} (${response.status})`,
           type: 'assistant',
           timestamp: new Date()
         }
@@ -156,7 +158,7 @@ export default function AgentPage() {
       if (!data.success) {
         const errorMessage: Message = {
           id: messages.length + 2,
-          content: `API Error: ${data.error?.message || 'ไม่สามารถประมวลผลคำถามได้'}`,
+          content: `API Error: ${data.error?.message || 'Unable to process question'}`,
           type: 'assistant',
           timestamp: new Date()
         }
@@ -166,7 +168,7 @@ export default function AgentPage() {
       
       const aiResponse: Message = {
         id: messages.length + 2,
-        content: data.data?.answer || 'ไม่พบคำตอบ',
+        content: data.data?.answer || 'Not have answer',
         type: 'assistant',
         timestamp: new Date()
       }
@@ -175,7 +177,7 @@ export default function AgentPage() {
       console.log('Error sending message to AI:', error)
       const errorMessage: Message = {
         id: messages.length + 2,
-        content: `เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        content: `Error Connecting: ${error instanceof Error ? error.message : 'Unknown error'}`,
         type: 'assistant',
         timestamp: new Date()
       }
@@ -211,7 +213,7 @@ export default function AgentPage() {
             </div>
             <div className="header-title">
               <h1 className="font-bold text-lg leading-6 text-[#1c170d] text-center m-0">
-                กำลังโหลดข้อมูลบ่อ...
+                Downloading pond data...
               </h1>
             </div>
           </div>
@@ -219,7 +221,7 @@ export default function AgentPage() {
         <div className="chat-container">
           <div className="welcome-section">
             <div className="empty-state">
-              <p className="empty-message">กำลังโหลดข้อมูลบ่อ กรุณารอสักครู่...</p>
+              <p className="empty-message">Downloading pond data please wait...</p>
             </div>
           </div>
         </div>
@@ -242,7 +244,7 @@ export default function AgentPage() {
             </div>
             <div className="header-title">
               <h1 className="font-bold text-lg leading-6 text-[#1c170d] text-center m-0">
-                เกิดข้อผิดพลาด
+                Error
               </h1>
             </div>
           </div>
@@ -250,7 +252,7 @@ export default function AgentPage() {
         <div className="chat-container">
           <div className="welcome-section">
             <div className="empty-state">
-              <p className="empty-message">ไม่สามารถโหลดข้อมูลบ่อได้ กรุณาลองใหม่อีกครั้ง</p>
+              <p className="empty-message">Error downloading data</p>
             </div>
           </div>
         </div>
@@ -283,9 +285,9 @@ export default function AgentPage() {
         {messages.length === 0 ? (
           <div className="welcome-section">
             <div className="empty-state">
-              <p className="empty-message">เริ่มต้นการสนทนากับผู้ช่วยของคุณได้เลย !!</p>
+              <p className="empty-message">Start chatting with your assistant !!</p>
               <div className="suggested-questions">
-                <p className="suggested-title">คำถามแนะนำ:</p>
+                <p className="suggested-title">Suggested questions:</p>
                 <div className="question-buttons">
                   {suggestedQuestions.slice(0, 3).map((question, index) => (
                     <button
@@ -338,7 +340,7 @@ export default function AgentPage() {
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="พิมพ์คำถามของคุณ..."
+            placeholder="Type your question..."
             className="message-input"
             rows={1}
             disabled={isLoading}

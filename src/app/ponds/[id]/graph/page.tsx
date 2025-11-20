@@ -133,8 +133,8 @@ export default function GraphPage() {
       <div className="flex-1 p-4 flex flex-col gap-6">
         {/* Title Section */}
         <div className="text-center">
-          <h2 className="font-bold text-xl text-[#1c170d] m-0">ข้อมูลของเซนเซอร์</h2>
-          <p className="text-sm text-gray-600 mt-1">ข้อมูลแบบ Real-time (อัปเดตทุก 5 วินาที)</p>
+          <h2 className="font-bold text-xl text-[#1c170d] m-0">Sensor Data</h2>
+          <p className="text-sm text-gray-600 mt-1">Real-time Data (updates every 5 seconds)</p>
         </div>
 
 
@@ -159,13 +159,13 @@ export default function GraphPage() {
                 <div className="flex items-center justify-center h-[200px]">
                   <div className="text-center">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2"></div>
-                    <p className="text-sm text-gray-500">กำลังโหลดข้อมูล {sensor.type}...</p>
+                    <p className="text-sm text-gray-500">Downloading Data {sensor.type}...</p>
                   </div>
                 </div>
               ) : sensor.error ? (
                 <div className="text-center py-8">
                   <div className="text-red-500 text-4xl mb-2">⚠️</div>
-                  <p className="text-red-600 mb-2">เกิดข้อผิดพลาดในการโหลดข้อมูล {sensor.type}</p>
+                  <p className="text-red-600 mb-2">Error Downloading Data {sensor.type}</p>
                   <button 
                     onClick={() => window.location.reload()} 
                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -185,7 +185,7 @@ export default function GraphPage() {
                 />
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-gray-500">ไม่มีข้อมูล {sensor.type}</p>
+                  <p className="text-gray-500">No information {sensor.type}</p>
                 </div>
               )}
             </div>
@@ -211,13 +211,13 @@ export default function GraphPage() {
             <div className="flex items-center justify-center h-[200px]">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto mb-2"></div>
-                <p className="text-sm text-gray-500">กำลังโหลดข้อมูลขนาดกุ้ง...</p>
+                <p className="text-sm text-gray-500">Downloading shrimp size...</p>
               </div>
             </div>
           ) : shrimpSizeError ? (
             <div className="text-center py-8">
               <div className="text-red-500 text-4xl mb-2">⚠️</div>
-              <p className="text-red-600 mb-2">เกิดข้อผิดพลาดในการโหลดข้อมูลขนาดกุ้ง</p>
+              <p className="text-red-600 mb-2">Error Downloading shrimp szie</p>
               <button 
                 onClick={() => window.location.reload()} 
                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -236,7 +236,7 @@ export default function GraphPage() {
             />
           ) : (
             <div className="text-center py-8">
-              <p className="text-gray-500">ไม่มีข้อมูลขนาดกุ้ง</p>
+              <p className="text-gray-500">No size shrimp data</p>
             </div>
           )}
         </div>

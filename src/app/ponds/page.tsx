@@ -27,13 +27,13 @@ export default function ShrimpPondsPage() {
   }
 
   const deletePond = async (pondId: string, pondName: string) => {
-    if (confirm(`คุณแน่ใจหรือไม่ที่จะลบบ่อ "${pondName}"?`)) {
+    if (confirm(`Pond deleted successfully. "${pondName}"?`)) {
       try {
         await deletePondMutation.mutateAsync(pondId)
-        alert('ลบบ่อเรียบร้อยแล้ว')
+        alert('Are you sure you want to delete the pond?')
       } catch (error) {
         console.error('Error deleting pond:', error)
-        const errorMessage = error instanceof Error ? error.message : 'เกิดข้อผิดพลาดในการลบบ่อ'
+        const errorMessage = error instanceof Error ? error.message : 'Error deleting pond.'
         alert(errorMessage)
       }
     }
@@ -46,7 +46,7 @@ export default function ShrimpPondsPage() {
         <div className="main-frame">
           <div className="loading-section">
             <div className="loading-spinner"></div>
-            <p>กำลังโหลดข้อมูลบ่อ...</p>
+            <p>Loading pond data...</p>
           </div>
         </div>
       </div>
@@ -58,8 +58,8 @@ export default function ShrimpPondsPage() {
       <div className="shrimp-ponds-container">
         <div className="main-frame">
           <div className="error-section">
-            <p>เกิดข้อผิดพลาดในการโหลดข้อมูลบ่อ</p>
-            <button onClick={() => window.location.reload()}>ลองใหม่</button>
+            <p>Error loading pond data.</p>
+            <button onClick={() => window.location.reload()}>Retry</button>
           </div>
         </div>
       </div>
@@ -129,24 +129,24 @@ export default function ShrimpPondsPage() {
                     </div>
                     <div className="pond-details">
                       <div className="detail-row">
-                        <span className="detail-label">ขนาดบ่อ:</span>
-                        <span className="detail-value">{pond.size || 'ยังไม่ได้ระบุ'}</span>
+                        <span className="detail-label">POND SIZE:</span>
+                        <span className="detail-value">{pond.size || 'Not specified'}</span>
                       </div>
                       <div className="detail-row">
-                        <span className="detail-label">วันที่ลงบ่อ:</span>
-                        <span className="detail-value">{pond.date || 'ยังไม่ได้ระบุ'}</span>
+                        <span className="detail-label">Pond stocking date:</span>
+                        <span className="detail-value">{pond.date || 'Not specified'}</span>
                       </div>
                       <div className="detail-row">
-                        <span className="detail-label">ขนาด ก x ย:</span>
-                        <span className="detail-value">{pond.dimensions || 'ยังไม่ได้ระบุ'}</span>
+                        <span className="detail-label">SIZE WIDE * LONG:</span>
+                        <span className="detail-value">{pond.dimensions || 'Not specified'}</span>
                       </div>
                       <div className="detail-row">
-                        <span className="detail-label">ความลึกบ่อ:</span>
-                        <span className="detail-value">{pond.depth || 'ยังไม่ได้ระบุ'}</span>
+                        <span className="detail-label">Pond depth:</span>
+                        <span className="detail-value">{pond.depth || 'Not specified'}</span>
                       </div>
                       <div className="detail-row">
-                        <span className="detail-label">จำนวนลูกกุ้งที่ปล่อย:</span>
-                        <span className="detail-value">{pond.shrimp_count ? `${pond.shrimp_count} ตัว` : 'ยังไม่ได้ระบุ'}</span>
+                        <span className="detail-label">Shrimp count stocked:</span>
+                        <span className="detail-value">{pond.shrimp_count ? `${pond.shrimp_count} shrimp` : 'Not specified'}</span>
                       </div>
                     </div>
                   </div>

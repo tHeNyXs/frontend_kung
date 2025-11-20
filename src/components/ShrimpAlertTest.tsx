@@ -7,7 +7,7 @@ export default function ShrimpAlertTest() {
   const [imageUrl, setImageUrl] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIM0syGxE_4zEiuWSroBXGlfRIcdIXR97v2Q&s');
   const [targetUrl, setTargetUrl] = useState('/ponds/1');
   const [userId, setUserId] = useState(1);
-  const [customBody, setCustomBody] = useState('ตรวจพบกุ้งลอยบนผิวน้ำ ควรตรวจสอบทันที');
+  const [customBody, setCustomBody] = useState('Floating shrimp detected. Please check immediately.');
   
   const sendShrimpAlert = useSendShrimpAlert();
 

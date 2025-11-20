@@ -82,7 +82,7 @@ const AlertBadge: React.FC<AlertBadgeProps> = ({
         animate-pulse
       `}
       onClick={onClick}
-      title={`มี ${badgeCount} แจ้งเตือนที่ยังไม่อ่าน`}
+      title={`have ${badgeCount} Unread notifications`}
     >
       {showCount && badgeCount > 0 && (
         <span className="font-bold">

@@ -27,7 +27,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!phoneNumber || !password) {
-      setError('กรุณากรอกเบอร์โทรและรหัสผ่าน')
+      setError('Please enter your phone number and password.')
       return
     }
     
@@ -39,7 +39,7 @@ export default function LoginPage() {
         password: password
       })
     } catch (error) {
-      setError('เกิดข้อผิดพลาดในการเข้าสู่ระบบ')
+      setError('Error login')
     }
   }
 
@@ -121,7 +121,7 @@ export default function LoginPage() {
             {/* Forgot Password */}
             <div className="forgot-password">
               <div className="forgot-password-text">
-                <Link href="/forget-password">ลืมรหัสผ่าน?</Link>
+                <Link href="/forget-password">Forget password?</Link>
               </div>
             </div>
 
@@ -135,7 +135,7 @@ export default function LoginPage() {
                 >
                   <div className="button-content">
                     <div className="button-text">
-                      <span>{loginMutation.isPending ? 'กำลังเข้าสู่ระบบ...' : 'ล็อกอิน'}</span>
+                      <span>{loginMutation.isPending ? 'Login...' : 'Login'}</span>
                     </div>
                   </div>
                 </button>
@@ -146,8 +146,8 @@ export default function LoginPage() {
             <div className="demo-credentials">
               <div className="demo-text">
                 <strong>Demo Account:</strong><br />
-                เบอร์โทร: 0812345678<br />
-                รหัสผ่าน: admin123
+                Phone: 0812345678<br />
+                Password: admin123
               </div>
             </div>
           </form>

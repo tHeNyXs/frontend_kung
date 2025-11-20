@@ -305,15 +305,15 @@ export default function PondDetailPage() {
       case 'waterColor':
         return value
       case 'minerals':
-        return `${roundFloat(value)} กิโลกรัม`
+        return `${roundFloat(value)} Kilogram`
       case 'mineral1':
       case 'mineral2':
         // สำหรับ Mineral 1-2: แสดงน้ำหนักเป็นกรัม
-        return `${roundFloat(value)} กิโลกรัม`
+        return `${roundFloat(value)} Kilogram`
       case 'mineral3':
       case 'mineral4':
         // สำหรับ Mineral 3-4: แสดงน้ำหนักเป็นกรัม
-        return `${roundFloat(value)} ลิตร`
+        return `${roundFloat(value)} Liter`
       default:
         return value.toString()
     }
@@ -322,9 +322,9 @@ export default function PondDetailPage() {
   if (isLoadingLatest || isLoadingBatch) {
     return (
       <div className="w-full flex flex-col h-full bg-[#fcfaf7] items-center justify-center">
-        <div className="text-lg text-[#1c170d]">กำลังโหลดข้อมูล...</div>
-        {isLoadingLatest && <div className="text-sm text-gray-500 mt-2">โหลดข้อมูลเซ็นเซอร์...</div>}
-        {isLoadingBatch && <div className="text-sm text-gray-500 mt-2">โหลดข้อมูลกุ้ง...</div>}
+        <div className="text-lg text-[#1c170d]">Loading Data...</div>
+        {isLoadingLatest && <div className="text-sm text-gray-500 mt-2">Loading Sensor Data...</div>}
+        {isLoadingBatch && <div className="text-sm text-gray-500 mt-2">Loading Shrimp Data...</div>}
       </div>
     )
   }
@@ -357,10 +357,10 @@ export default function PondDetailPage() {
       <div className="w-full flex flex-col h-full bg-[#fcfaf7] items-center justify-center px-4">
         <div className="text-center">
           <div className="text-6xl mb-4">⚠️</div>
-          <div className="text-lg text-red-600 font-bold mb-2">เกิดข้อผิดพลาด:</div>
-          {error && <div className="text-sm text-red-500 mt-1 mb-1">เซ็นเซอร์: {error.message}</div>}
-          {batchError && <div className="text-sm text-red-500 mt-1 mb-1">กุ้ง: {batchError.message}</div>}
-          <div className="text-sm text-gray-500 mt-2 mb-6">กำลังใช้ข้อมูลสำรอง</div>
+          <div className="text-lg text-red-600 font-bold mb-2">An error occurred.:</div>
+          {error && <div className="text-sm text-red-500 mt-1 mb-1">Sensor: {error.message}</div>}
+          {batchError && <div className="text-sm text-red-500 mt-1 mb-1">Shrimp: {batchError.message}</div>}
+          <div className="text-sm text-gray-500 mt-2 mb-6">Using backup data.</div>
           
           {/* Refresh Button */}
           <button
@@ -375,7 +375,7 @@ export default function PondDetailPage() {
           
           {/* Auto refresh countdown */}
           <div className="text-xs text-gray-400 mt-4">
-            กำลังรีเฟรชอัตโนมัติใน <span className="font-bold text-[#f2c245]">{countdown}</span> วินาที...
+            กำลังรีเฟรชอัตโนมัติใน <span className="font-bold text-[#f2c245]">{countdown}</span> second...
           </div>
         </div>
       </div>
@@ -445,19 +445,19 @@ export default function PondDetailPage() {
             <div className="flex items-center justify-center space-x-8">
               {/* สถานะดีเยี่ยม */}
               <div className="flex flex-col items-center">
-                <div className="text-sm text-gray-600 mb-2">สถานะดีเยี่ยม</div>
+                <div className="text-sm text-gray-600 mb-2">Excellent status</div>
                 <div className="w-20 h-3 bg-green-500 rounded-full shadow-sm"></div>
               </div>
               
               {/* กำลังปรับปรุง */}
               <div className="flex flex-col items-center">
-                <div className="text-sm text-gray-600 mb-2">กำลังปรับปรุง</div>
+                <div className="text-sm text-gray-600 mb-2">Currently improving</div>
                 <div className="w-20 h-3 rounded-full shadow-sm" style={{backgroundColor: '#FFB600'}}></div>
               </div>
               
               {/* ซวยแล้ว!! */}
               <div className="flex flex-col items-center">
-                <div className="text-sm text-gray-600 mb-2">ซวยแล้ว!!</div>
+                <div className="text-sm text-gray-600 mb-2">An unexpected issue occurred!!</div>
                 <div className="w-20 h-3 bg-red-500 rounded-full shadow-sm"></div>
               </div>
             </div>
@@ -474,11 +474,11 @@ export default function PondDetailPage() {
           {/* DO Card */}
            <div className={`${getBackgroundColor(sensorData.DO.status)} rounded-2xl p-5 border-2 ${getStatusColor(sensorData.DO.status)} shadow-lg`}>
             <div>
-              <h3 className="font-semibold text-lg text-[#1c170d] mb-3 m-0">DO (ค่าออกซิเจนในน้ำ)</h3>
+              <h3 className="font-semibold text-lg text-[#1c170d] mb-3 m-0">DO (Oxygen)</h3>
               <div className="font-bold text-2xl text-[#1c170d] mb-3">{formatValue('DO', sensorData.DO.value)}</div>
               {sensorData.DO.timestamp && (
                 <div className="text-xs text-gray-500">
-                  อัปเดตล่าสุด: {new Date(sensorData.DO.timestamp).toLocaleString('th-TH')}
+                  Latest Update: {new Date(sensorData.DO.timestamp).toLocaleString('th-TH')}
                 </div>
               )}
             </div>
@@ -491,7 +491,7 @@ export default function PondDetailPage() {
               <div className="font-bold text-2xl text-[#1c170d] mb-3">{formatValue('pH', sensorData.pH.value)}</div>
               {sensorData.pH.timestamp && (
                 <div className="text-xs text-gray-500">
-                  อัปเดตล่าสุด: {new Date(sensorData.pH.timestamp).toLocaleString('th-TH')}
+                  Latest Update: {new Date(sensorData.pH.timestamp).toLocaleString('th-TH')}
                 </div>
               )}
             </div>
@@ -504,7 +504,7 @@ export default function PondDetailPage() {
               <div className="font-bold text-2xl text-[#1c170d] mb-3">{formatValue('temperature', sensorData.temperature.value)}</div>
               {sensorData.temperature.timestamp && (
                 <div className="text-xs text-gray-500">
-                  อัปเดตล่าสุด: {new Date(sensorData.temperature.timestamp).toLocaleString('th-TH')}
+                  Latest Update: {new Date(sensorData.temperature.timestamp).toLocaleString('th-TH')}
                 </div>
               )}
             </div>
@@ -535,7 +535,7 @@ export default function PondDetailPage() {
                  </div>
                  {sensorData.shrimpSurface?.timestamp && (
                    <div className="text-xs text-gray-500">
-                     อัปเดตล่าสุด: {new Date(sensorData.shrimpSurface.timestamp).toLocaleString('th-TH')}
+                     Latest Update: {new Date(sensorData.shrimpSurface.timestamp).toLocaleString('th-TH')}
                    </div>
                  )}
               </div>
@@ -553,7 +553,7 @@ export default function PondDetailPage() {
               <div className="font-bold text-2xl text-[#1c170d] mb-3">{formatValue('shrimpSize', sensorData.shrimpSize.value)}</div>
               {sensorData.shrimpSize.timestamp && (
                   <div className="text-xs text-gray-500">
-                  อัปเดตล่าสุด: {new Date(sensorData.shrimpSize.timestamp).toLocaleString('th-TH')}
+                  Latest Update: {new Date(sensorData.shrimpSize.timestamp).toLocaleString('th-TH')}
                 </div>
               )}
             </div>
@@ -566,7 +566,7 @@ export default function PondDetailPage() {
                 <div className="font-bold text-2xl text-[#1c170d] mb-3">{sensorData.shrimpWeight?.value || '0.0'} กรัม</div>
                 {sensorData.shrimpWeight?.timestamp && (
                   <div className="text-xs text-gray-500">
-                    อัปเดตล่าสุด: {new Date(sensorData.shrimpWeight.timestamp).toLocaleString('th-TH')}
+                    Latest Update: {new Date(sensorData.shrimpWeight.timestamp).toLocaleString('th-TH')}
                   </div>
                 )}
               </div>
@@ -581,7 +581,7 @@ export default function PondDetailPage() {
                  </div>
                  {sensorData.shrimpSize?.timestamp && (
                    <div className="text-xs text-gray-500">
-                     อัปเดตล่าสุด: {new Date(sensorData.shrimpSize.timestamp).toLocaleString('th-TH')}
+                     Latest Update: {new Date(sensorData.shrimpSize.timestamp).toLocaleString('th-TH')}
                    </div>
                  )}
               </div>
@@ -596,7 +596,7 @@ export default function PondDetailPage() {
                  </div>
                  {sensorData.food?.timestamp && (
                    <div className="text-xs text-gray-500">
-                     อัปเดตล่าสุด: {new Date(sensorData.food.timestamp).toLocaleString('th-TH')}
+                     Latest Update: {new Date(sensorData.food.timestamp).toLocaleString('th-TH')}
                    </div>
                  )}
               </div>
@@ -611,7 +611,7 @@ export default function PondDetailPage() {
                  </div>
                  {sensorData.shrimpVideo?.timestamp && (
                    <div className="text-xs text-gray-500">
-                     อัปเดตล่าสุด: {new Date(sensorData.shrimpVideo.timestamp).toLocaleString('th-TH')}
+                     Latest Update: {new Date(sensorData.shrimpVideo.timestamp).toLocaleString('th-TH')}
                    </div>
                  )}
               </div>
@@ -629,7 +629,7 @@ export default function PondDetailPage() {
                 <div className="font-bold text-2xl text-[#1c170d] mb-3">{formatValue('mineral1', sensorData.mineral1?.value || '0.0')}</div>
                 {sensorData.mineral1?.timestamp && (
                   <div className="text-xs text-gray-500">
-                    อัปเดตล่าสุด: {new Date(sensorData.mineral1.timestamp).toLocaleString('th-TH')}
+                    Latest Update: {new Date(sensorData.mineral1.timestamp).toLocaleString('th-TH')}
                   </div>
                 )}
               </div>
@@ -642,7 +642,7 @@ export default function PondDetailPage() {
                 <div className="font-bold text-2xl text-[#1c170d] mb-3">{formatValue('mineral2', sensorData.mineral2?.value || '0.0')}</div>
                 {sensorData.mineral2?.timestamp && (
                   <div className="text-xs text-gray-500">
-                    อัปเดตล่าสุด: {new Date(sensorData.mineral2.timestamp).toLocaleString('th-TH')}
+                    Latest Update: {new Date(sensorData.mineral2.timestamp).toLocaleString('th-TH')}
                   </div>
                 )}
             </div>
@@ -655,7 +655,7 @@ export default function PondDetailPage() {
                 <div className="font-bold text-2xl text-[#1c170d] mb-3">{formatValue('mineral3', sensorData.mineral3?.value || 'false')}</div>
                 {sensorData.mineral3?.timestamp && (
                   <div className="text-xs text-gray-500">
-                    อัปเดตล่าสุด: {new Date(sensorData.mineral3.timestamp).toLocaleString('th-TH')}
+                    Latest Update: {new Date(sensorData.mineral3.timestamp).toLocaleString('th-TH')}
                 </div>
               )}
             </div>
@@ -668,7 +668,7 @@ export default function PondDetailPage() {
                 <div className="font-bold text-2xl text-[#1c170d] mb-3">{formatValue('mineral4', sensorData.mineral4?.value || 'false')}</div>
                 {sensorData.mineral4?.timestamp && (
                 <div className="text-xs text-gray-500">
-                    อัปเดตล่าสุด: {new Date(sensorData.mineral4.timestamp).toLocaleString('th-TH')}
+                    Latest Update: {new Date(sensorData.mineral4.timestamp).toLocaleString('th-TH')}
                 </div>
               )}
               </div>

@@ -166,11 +166,11 @@ const handleLiftUp = async () => {
     } else {
       const errorData = await response.json().catch(() => ({}))
       console.error('❌ Failed to send lift_up command:', response.status, errorData)
-      alert('เกิดข้อผิดพลาดในการส่งคำสั่ง กรุณาลองใหม่อีกครั้ง')
+      alert('Command failed. Please try again.')
     }
   } catch (error) {
     console.error('💥 Error calling backend_middle:', error)
-    alert('ไม่สามารถเชื่อมต่อกับระบบควบคุมได้ กรุณาตรวจสอบการเชื่อมต่อ')
+    alert('Unable to establish a connection to the control system. Please verify your connection.')
   }
 }
 
@@ -206,15 +206,15 @@ const handleCamSide = async () => {
     if (response.ok) {
       const result = await response.json()
       console.log('✅ cam_side command sent successfully:', result)
-      alert('คำสั่งถ่ายรูปข้างบ่อส่งสำเร็จ!')
+      alert('The command to take a pond-side photo was sent successfully!')
     } else {
       const errorData = await response.json().catch(() => ({}))
       console.error('❌ Failed to send cam_side command:', response.status, errorData)
-      alert('เกิดข้อผิดพลาดในการส่งคำสั่ง กรุณาลองใหม่อีกครั้ง')
+      alert('Command error. Please try again.')
     }
   } catch (error) {
     console.error('💥 Error calling cloud API:', error)
-    alert('ไม่สามารถเชื่อมต่อกับระบบควบคุมได้ กรุณาตรวจสอบการเชื่อมต่อ')
+    alert('Unable to establish a connection to the control system. Please verify your connection.')
   } finally {
     setIsCapturing(false)
   }
@@ -233,7 +233,7 @@ const handleCamSide = async () => {
               </div>
             </div>
             <div className="title-container">
-              <h1>{pond?.name || `บ่อที่ ${pondId}`}</h1>
+              <h1>{pond?.name || `Pond number ${pondId}`}</h1>
             </div>
           </div>
         </div>
@@ -243,7 +243,7 @@ const handleCamSide = async () => {
           {/* Equipment Control Section */}
           <div className="equipment-section">
             <div className="section-title">
-              <h2>อุปกรณ์ที่สามารถควบคุมได้</h2>
+              <h2>Devices you can control</h2>
             </div>
 
             {/* Control Item 1 */}
@@ -262,8 +262,8 @@ const handleCamSide = async () => {
                   </svg>
                 </div>
                 <div className="control-info">
-                  <h3>1. กังหันน้ำ</h3>
-                  <p>กดเพื่อหมุนกังหันน้ำ</p>
+                  <h3>1. Paddlewheel Aerator</h3>
+                  <p>Press to rotate the aerator.</p>
                 </div>
               </div>
               <div className="toggle-switch" onClick={(e) => toggleSwitch(e.currentTarget)}>
@@ -287,11 +287,11 @@ const handleCamSide = async () => {
                   </svg>
                 </div>
                 <div className="control-info">
-                  <h3>2. ยกยอขึ้น/ลง</h3>
+                  <h3>2. Lift net up / down</h3>
                   <p>
                     {isProcessing 
-                      ? 'กำลังประมวลผล...' 
-                      : 'กดเพื่อยกยอขึ้น → ถ่ายรูป → ยกลง'
+                      ? 'Processing...' 
+                      : 'Press to lift the net → take photo → lower'
                     }
                   </p>
                 </div>
@@ -319,7 +319,7 @@ const handleCamSide = async () => {
                   <button 
                     className="status-check-button"
                     onClick={showCurrentStatus}
-                    title="ดูสถานะปัจจุบัน"
+                    title="View Status Now"
                     style={{ 
                       padding: '8px 12px',
                       backgroundColor: '#3B82F6',
@@ -375,7 +375,7 @@ const handleCamSide = async () => {
                   <button 
                     className="status-check-button"
                     onClick={showCurrentStatus}
-                    title="ดูสถานะปัจจุบัน"
+                    title="View Status Now"
                     style={{ 
                       padding: '8px 12px',
                       backgroundColor: '#3B82F6',
@@ -420,11 +420,11 @@ const handleCamSide = async () => {
                   </svg>
                 </div>
                 <div className="control-info">
-                  <h3>3. ถ่ายรูปข้างบ่อ</h3>
+                  <h3>3. Capture pond-side photo</h3>
                   <p>
                     {isCapturing 
-                      ? 'กำลังส่งคำสั่ง...' 
-                      : 'กดเพื่อถ่ายรูปข้างบ่อ'
+                      ? 'Sending command...' 
+                      : 'Press to capture pond-side photo'
                     }
                   </p>
                 </div>
@@ -462,8 +462,8 @@ const handleCamSide = async () => {
                   </svg>
                 </div>
                 <div className="control-info">
-                  <h3>4. ระบบแจ้งเตือน</h3>
-                  <p>เปิด/ปิดการแจ้งเตือนอัตโนมัติ</p>
+                  <h3>4. Notification</h3>
+                  <p>Auto notifications: On / Off</p>
                 </div>
               </div>
               <div className="toggle-switch active" onClick={(e) => toggleSwitch(e.currentTarget)}>
@@ -480,8 +480,8 @@ const handleCamSide = async () => {
                   </svg>
                 </div>
                 <div className="control-info">
-                  <h3>5. ระบบบันทึกข้อมูล</h3>
-                  <p>เปิด/ปิดการบันทึกข้อมูลอัตโนมัติ</p>
+                  <h3>5. Data Logging System</h3>
+                  <p>Enable/Disable automatic data logging</p>
                 </div>
               </div>
               <div className="toggle-switch active" onClick={(e) => toggleSwitch(e.currentTarget)}>
@@ -498,17 +498,17 @@ const handleCamSide = async () => {
                   </svg>
                 </div>
                 <div className="control-info">
-                  <h3>6. ระบบอัตโนมัติหลัก</h3>
+                  <h3>6. Main Automation System</h3>
                   <p>
                     {isSystemToggling 
-                      ? 'กำลังเปลี่ยนสถานะ...' 
+                      ? 'Changing status...' 
                       : isSystemEnabled 
-                        ? 'ระบบอัตโนมัติเปิดอยู่ - กำลังตรวจสอบตารางเวลา' 
-                        : 'ระบบอัตโนมัติปิดอยู่ - ไม่มีการตรวจสอบตารางเวลา'
+                        ? 'Automation is ON - Checking schedule' 
+                        : 'Automation is OFF - No schedule checking'
                     }
                     {isSystemEnabled && systemStatus?.last_check && (
                       <span style={{ display: 'block', marginTop: '8px', fontSize: '14px', color: '#10B981' }}>
-                        ✓ ตรวจสอบล่าสุด: {new Date(systemStatus.last_check).toLocaleString('th-TH')}
+                        ✓ Latest Checking: {new Date(systemStatus.last_check).toLocaleString('th-TH')}
                       </span>
                     )}
                   </p>
@@ -535,8 +535,8 @@ const handleCamSide = async () => {
                   </svg>
                 </div>
                 <div className="control-info">
-                  <h3>7. ตั้งเวลา Routine ยกยอ</h3>
-                  <p>กำหนดเวลายกยออัตโนมัติ (ยกขึ้น → ถ่ายรูป → ยกลง)</p>
+                  <h3>7. Lift Net Routine Schedule</h3>
+                  <p>Set automatic timing (Lift → Capture → Lower)</p>
                 </div>
               </div>
               <div className="control-actions">
@@ -571,24 +571,24 @@ const handleCamSide = async () => {
                   <div className="header-left">
                     <div className="header-icon">⚙️</div>
                     <div>
-                      <h4>ตั้งค่า Routine ยกยอ</h4>
-                      <p className="header-subtitle">กำหนดเวลายกยออัตโนมัติ (ยกขึ้น → ถ่ายรูป → ยกลง)</p>
+                      <h4>Lift Net Routine Settings</h4>
+                      <p className="header-subtitle">Set automatic timing (Lift → Capture → Lower)</p>
                       <div className="system-status">
                         <span className={`status-indicator ${isSystemEnabled ? 'active' : 'inactive'}`}>
                           {isSystemEnabled ? '🟢' : '🔴'}
                         </span>
                         <span className="status-text">
-                          ระบบอัตโนมัติ: {isSystemEnabled ? 'เปิด' : 'ปิด'}
+                          Automation: {isSystemEnabled ? 'ON' : 'OFF'}
                           {systemStatus?.last_check && (
                             <span className="last-check">
-                              (ตรวจสอบล่าสุด: {new Date(systemStatus.last_check).toLocaleTimeString('th-TH')})
+                              (Latest Checking: {new Date(systemStatus.last_check).toLocaleTimeString('th-TH')})
                             </span>
                           )}
                           {isSystemEnabled && (
                             <span className="system-info">
                               <br />
                               <small style={{ color: '#10B981', fontSize: '12px' }}>
-                                ✓ ระบบกำลังทำงาน - ตรวจสอบทุก 30 วินาที
+                                ✓ System active – Checks every 30 seconds
                               </small>
                             </span>
                           )}
@@ -599,7 +599,7 @@ const handleCamSide = async () => {
                   <button 
                     className="close-panel-btn"
                     onClick={() => setShowRoutineSettings(false)}
-                    title="ปิดการตั้งค่า"
+                    title="Off Setting"
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                       <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -614,7 +614,7 @@ const handleCamSide = async () => {
                     <div className="form-group">
                       <label>
                         <span className="label-icon">🕐</span>
-                        <h5>เพิ่มตารางเวลาใหม่</h5>
+                        <h5>Add New Schedule</h5>
                       </label>
                       <div className="time-input-wrapper">
                         <input 
@@ -631,31 +631,31 @@ const handleCamSide = async () => {
                   <div className="form-group">
                     <label>
                       <span className="label-icon">📅</span>
-                      วันในสัปดาห์
+                      Day
                     </label>
                     <div className="days-container">
                       <div className="days-header">
-                        <span>เลือกวัน</span>
+                        <span>Select Day</span>
                         <div className="day-actions">
                           <button 
                             className="select-all-btn"
                             onClick={() => setNewSchedule(prev => ({
                               ...prev,
-                              days: ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์']
+                              days: ['Monday', 'Tuseday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
                             }))}
                           >
-                            เลือกทั้งหมด
+                            Select All
                           </button>
                           <button 
                             className="clear-all-btn"
                             onClick={() => setNewSchedule(prev => ({...prev, days: []}))}
                           >
-                            ล้างทั้งหมด
+                            Delete All
                           </button>
                         </div>
                       </div>
                       <div className="days-checkboxes">
-                        {['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'].map((day, index) => (
+                        {['Monday', 'Tuseday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => (
                           <label key={day} className={`day-checkbox ${newSchedule.days.includes(day) ? 'checked' : ''}`}>
                             <input 
                               type="checkbox"
@@ -683,14 +683,14 @@ const handleCamSide = async () => {
                       {addScheduleMutation.isPending ? (
                         <>
                           <div className="btn-spinner"></div>
-                          กำลังเพิ่ม...
+                          Adding...
                         </>
                       ) : (
                         <>
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                             <path d="M12 5v14m7-7H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
-                          เพิ่มตารางเวลา
+                          Add a schedule
                         </>
                       )}
                     </button>
@@ -700,18 +700,18 @@ const handleCamSide = async () => {
                 {/* Existing Schedules */}
                 <div className="schedules-list">
                   <div className="section-header">
-                    <h4>ตารางเวลาที่ตั้งไว้</h4>
+                    <h4>set time schedule</h4>
                   </div>
                   {isRoutineLoading ? (
                     <div className="loading-state">
                       <div className="loading-spinner"></div>
-                      <p>กำลังโหลด...</p>
+                      <p>Downloading...</p>
                     </div>
                   ) : routineSettings?.schedules?.length === 0 ? (
                     <div className="empty-state">
                       <div className="empty-icon">📅</div>
-                      <h5>ยังไม่มีตารางเวลา</h5>
-                      <p>เพิ่มตารางเวลาใหม่เพื่อเริ่มต้นการทำงานอัตโนมัติ</p>
+                      <h5>No Schedule</h5>
+                      <p>Add a new schedule to start the automation.</p>
                     </div>
                   ) : (
                     <div className="schedules-grid">
@@ -732,7 +732,7 @@ const handleCamSide = async () => {
                             className="remove-schedule-btn"
                             onClick={() => removeSchedule(schedule.id)}
                             disabled={removeScheduleMutation.isPending}
-                            title="ลบตารางเวลานี้"
+                            title="Delete this schedule"
                           >
                             {removeScheduleMutation.isPending ? (
                               <div className="btn-spinner small"></div>
@@ -754,7 +754,7 @@ const handleCamSide = async () => {
           {/* System Status Section */}
           <div className="sensor-status-section">
             <div className="section-title">
-              <h2>สถานะระบบ</h2>
+              <h2>System Status</h2>
             </div>
             
             <div className="sensor-grid">
@@ -766,7 +766,7 @@ const handleCamSide = async () => {
                       <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0D1C0D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <div className="sensor-label">เครื่องยกยอกุ้ง</div>
+                  <div className="sensor-label">Shrimp lift-net system</div>
                 </div>
 
                 {/* เครื่องปรับคุณภาพน้ำ */}
@@ -776,7 +776,7 @@ const handleCamSide = async () => {
                       <path d="M12 2.5C13.5 3.75 19.5 8.75 19.5 14.25C19.5 17.973 16.473 21 12.75 21H12C8.13401 21 5 17.866 5 14C5 9 12 2.5 12 2.5z" stroke="#0D1C0D" strokeWidth="2" fill="none"/>
                     </svg>
                   </div>
-                  <div className="sensor-label">เครื่องปรับคุณภาพน้ำ</div>
+                  <div className="sensor-label">Water Quality Controller</div>
                 </div>
               </div>
             </div>

@@ -35,7 +35,7 @@ export default function RouteGuard({
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
-        <p>กำลังตรวจสอบการเข้าสู่ระบบ...</p>
+        <p>Checking login...</p>
         <style jsx>{`
           .loading-container {
             display: flex;

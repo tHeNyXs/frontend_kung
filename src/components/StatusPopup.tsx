@@ -26,11 +26,11 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
 
   // Status messages mapping (ปรับลำดับให้ตรงกับที่ต้องการ)
   const statusMessages = {
-    1: 'กำลังเตรียมกล้องถ่ายรูป....',
-    2: 'กำลังเริ่มยกยอขึ้น....',
-    3: 'ถ่ายสำเร็จ...',
-    4: 'กรุณารอข้อมูลสักครู่...',
-    5: 'กำลังประมวลผลรูปผ่านระบบ AI โปรดรอ 1 นาที!!....'
+    1: 'Camera is being prepared....',
+    2: 'Beginning to raise the lift net....',
+    3: 'Successfully captured....',
+    4: 'Please wait while the data is being prepared....',
+    5: 'กำAI processing in progress. Please wait 1 minute!!....'
   };
 
   // Enhanced status icons with animations
@@ -53,11 +53,11 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
 
   // Status descriptions (ปรับให้สอดคล้องกับข้อความด้านบน)
   const statusDescriptions = {
-    1: 'เตรียมกล้องสำหรับถ่ายภาพ',
-    2: 'เริ่มต้นกระบวนการยกยอ',
-    3: 'ถ่ายภาพเรียบร้อยแล้ว',
-    4: 'กำลังประมวลผลข้อมูล',
-    5: 'กำลังประมวลผลรูป/วิดีโอผ่านระบบ AI โปรดรอ 1 นาที'
+    1: 'Camera is being prepared.',
+    2: 'Beginning to raise the lift net.',
+    3: 'Successfully captured.',
+    4: 'Please wait while the data is being prepared.',
+    5: 'AI processing in progress. Please wait 1 minute!!'
   };
 
   useEffect(() => {

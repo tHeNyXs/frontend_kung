@@ -55,12 +55,12 @@ export default function HistoryPage() {
       
       if (response.ok) {
         await fetchLogFiles() // Refresh the list
-        alert('เพิ่มไฟล์ log เรียบร้อยแล้ว')
+        alert('Log added successfully.')
       } else {
-        alert('เกิดข้อผิดพลาดในการเพิ่มไฟล์ log')
+        alert('Error adding log file.')
       }
     } catch (error) {
-      alert('เกิดข้อผิดพลาดในการเพิ่มไฟล์ log')
+      alert('Error adding log file.')
     } finally {
       setIsAdding(false)
     }
@@ -68,7 +68,7 @@ export default function HistoryPage() {
 
   // Delete log file
   const deleteLogFile = async (logId: string) => {
-    if (!confirm('คุณแน่ใจหรือไม่ที่จะลบไฟล์ log นี้?')) return
+    if (!confirm('Are you sure you want to delete this log file?')) return
     
     try {
       const response = await fetch(`/api/logs/delete/${logId}`, {
@@ -77,12 +77,12 @@ export default function HistoryPage() {
       
       if (response.ok) {
         await fetchLogFiles() // Refresh the list
-        alert('ลบไฟล์ log เรียบร้อยแล้ว')
+        alert('Log file deleted successfully.')
       } else {
-        alert('เกิดข้อผิดพลาดในการลบไฟล์ log')
+        alert('Error deleting log file.')
       }
     } catch (error) {
-      alert('เกิดข้อผิดพลาดในการลบไฟล์ log')
+      alert('Error deleting log file.')
     }
   }
 
@@ -101,10 +101,10 @@ export default function HistoryPage() {
         window.URL.revokeObjectURL(url)
         document.body.removeChild(a)
       } else {
-        alert('เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์')
+        alert('Error downloading file.')
       }
     } catch (error) {
-      alert('เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์')
+      alert('Error downloading file.')
     }
   }
 
@@ -140,7 +140,7 @@ export default function HistoryPage() {
               </div>
             </div>
             <div className="title-container">
-              <h1>{pond?.name || `บ่อที่ ${pondId}`}</h1>
+              <h1>{pond?.name || `Number Pond ${pondId}`}</h1>
             </div>
           </div>
         </div>
@@ -149,18 +149,18 @@ export default function HistoryPage() {
         <div className="content-area">
           {/* Title Section */}
           <div className="title-section">
-            <h2>ประวัติ ไฟล์ค่าวันก่อนหน้า</h2>
+            <h2>Previous day’s data file</h2>
           </div>
 
           {/* File Section */}
           <div className="file-section">
             {isLoading ? (
               <div className="loading-state">
-                <p>กำลังโหลดไฟล์ log...</p>
+                <p>Loading log file...</p>
               </div>
             ) : logFiles.length === 0 ? (
               <div className="empty-state">
-                <p>ไม่มีไฟล์ log ในขณะนี้</p>
+                <p>No log files available</p>
                 <p>logFiles count: {logFiles.length}</p>
                 <button 
                   className="add-button" 
@@ -168,7 +168,7 @@ export default function HistoryPage() {
                   disabled={isAdding}
                   style={{marginTop: '16px'}}
                 >
-                  {isAdding ? 'กำลังเพิ่ม...' : 'เพิ่มไฟล์ Log ใหม่'}
+                  {isAdding ? 'adding...' : 'adding log file successfully'}
                 </button>
             </div>
             ) : (
@@ -183,7 +183,7 @@ export default function HistoryPage() {
                     <button 
                       className="action-button download-btn"
                       onClick={() => downloadFile(logFile.id, logFile.name)}
-                      title="ดาวน์โหลด"
+                      title="Download"
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M12 15.75L8.25 12L9.66 10.59L11.25 12.18V3H12.75V12.18L14.34 10.59L15.75 12L12 15.75Z" fill="currentColor"/>
@@ -212,7 +212,7 @@ export default function HistoryPage() {
               onClick={addLogFile}
               disabled={isAdding}
             >
-              {isAdding ? 'กำลังเพิ่ม...' : 'เพิ่มไฟล์ Log ใหม่'}
+              {isAdding ? 'adding...' : 'adding log file successfully'}
             </button>
           </div>
         </div>

@@ -33,10 +33,10 @@ export default function ForgetPasswordPage() {
         <div className="main-frame">
           <div className="success-content">
             <div className="success-icon">✅</div>
-            <h2>ส่งรหัสผ่านไปที่เบอร์แล้ว</h2>
-            <p>เราได้ส่งรหัสผ่านไปยังเบอร์โทรศัพท์ของคุณแล้ว</p>
+            <h2>Password has been sent to your phone number.</h2>
+            <p>Password has been sent to your phone number.</p>
             <button onClick={goBack} className="back-button">
-              กลับไปหน้าเข้าสู่ระบบ
+              Return to the login page.
             </button>
           </div>
         </div>
