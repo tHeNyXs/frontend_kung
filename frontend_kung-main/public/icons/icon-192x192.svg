@@ -1,0 +1,13 @@
+<svg width="200" height="80" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Shrimp Icon -->
+<path d="M10 40L20 20L30 40L20 60L10 40Z" fill="#FFD000"/>
+<!-- Shrimp Body -->
+<path d="M10 40L20 25L30 40L20 55L10 40Z" fill="#FFD000"/>
+<!-- Tail Fins -->
+<path d="M10 40L15 35L10 30L10 40Z" fill="#FFD000"/>
+<path d="M30 40L25 35L30 30L30 40Z" fill="#FFD000"/>
+<!-- Eye -->
+<circle cx="20" cy="28" r="2" fill="#000"/>
+<!-- ShrimpSense Text -->
+<text x="45" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="normal" fill="#000">ShrimpSense</text>
+</svg>
