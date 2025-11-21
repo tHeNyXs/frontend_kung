@@ -158,7 +158,7 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="text-xl">📋</div>
                   <h4 className="text-lg font-bold text-[#1c170d]">
-                    แจ้งเตือนที่ยังไม่อ่าน
+                    No unread notifications
                   </h4>
                   <div className="bg-[#f2c245] text-[#1c170d] px-3 py-1 rounded-full text-sm font-bold">
                     {alerts.length}
@@ -234,12 +234,12 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
                 {isLoading ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>กำลังประมวลผล...</span>
+                    <span>Processing...</span>
                   </>
                 ) : (
                   <>
                     <span>✓</span>
-                    <span>อ่านแล้ว</span>
+                    <span>Already read</span>
                   </>
                 )}
               </button>
@@ -255,10 +255,10 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
                   {isLoading ? (
                     <>
                       <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin mr-1"></div>
-                      <span className="text-xs">กำลังล้าง...</span>
+                      <span className="text-xs">Cleaning...</span>
                     </>
                   ) : (
-                    'ล้าง🗑️'
+                    'clean🗑️'
                   )}
                 </button>
               )}
