@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { usePushNotifications } from '@/hooks/use-push-notifications'
 import { useAuth } from '@/providers/auth-provider'
 
@@ -9,14 +9,18 @@ interface PushNotificationPermissionProps {
   onPermissionDenied?: () => void
   showSettings?: boolean
   className?: string
+  // ⭐ เพิ่ม option ไว้เรียก popup จากภายนอกได้
+  autoOpenPrompt?: boolean
 }
 
 export default function PushNotificationPermission({
   onPermissionGranted,
   onPermissionDenied,
   showSettings = false,
-  className = ''
+  className = '',
+  autoOpenPrompt = false
 }: PushNotificationPermissionProps) {
+  
   const { isAuthenticated } = useAuth()
   const {
     isSupported,
@@ -33,12 +37,10 @@ export default function PushNotificationPermission({
   const [showPermissionPrompt, setShowPermissionPrompt] = useState(false)
   const [showSettingsPanel, setShowSettingsPanel] = useState(false)
 
-  // Show permission prompt after login
-  useEffect(() => {
-    if (isAuthenticated && isSupported && permission === 'default' && !showPermissionPrompt) {
-      setShowPermissionPrompt(true)
-    }
-  }, [isAuthenticated, isSupported, permission, showPermissionPrompt])
+  // ⭐ อนุญาตเปิด popup เมื่อผู้ใช้กดเรียกเองเท่านั้น
+  const openPermissionPopup = () => {
+    setShowPermissionPrompt(true)
+  }
 
   const handleRequestPermission = async () => {
     const granted = await requestPermission()
@@ -76,22 +78,18 @@ export default function PushNotificationPermission({
     setShowSettingsPanel(false)
   }
 
-  // Don't render if not supported
-  if (!isSupported) {
-    return null
-  }
+  // ไม่รองรับ push
+  if (!isSupported) return null
 
-  // Permission prompt modal
+  // ⭐ modal ขออนุญาต (แสดงเมื่อกดเรียก)
   if (showPermissionPrompt && permission === 'default') {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        {/* Backdrop */}
         <div 
           className="absolute inset-0 bg-black bg-opacity-50"
           onClick={handleClose}
         />
         
-        {/* Modal */}
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
           <div className="p-6">
             <div className="flex items-start">
@@ -130,17 +128,15 @@ export default function PushNotificationPermission({
     )
   }
 
-  // Permission denied modal
+  // ⭐ modal ถ้า user ปฏิเสธ (permission = denied)
   if (permission === 'denied') {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        {/* Backdrop */}
         <div 
           className="absolute inset-0 bg-black bg-opacity-50"
           onClick={handleClose}
         />
         
-        {/* Modal */}
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
           <div className="p-6">
             <div className="flex items-start">
@@ -172,17 +168,15 @@ export default function PushNotificationPermission({
     )
   }
 
-  // Not subscribed but permission granted modal
+  // ⭐ modal แนะนำ subscribe หลังอนุญาตแล้ว
   if (permission === 'granted' && !isSubscribed) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        {/* Backdrop */}
         <div 
           className="absolute inset-0 bg-black bg-opacity-50"
           onClick={handleClose}
         />
         
-        {/* Modal */}
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
           <div className="p-6">
             <div className="flex items-start">
@@ -221,17 +215,15 @@ export default function PushNotificationPermission({
     )
   }
 
-  // Error state modal
+  // error modal
   if (error) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        {/* Backdrop */}
         <div 
           className="absolute inset-0 bg-black bg-opacity-50"
           onClick={handleClose}
         />
         
-        {/* Modal */}
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
           <div className="p-6">
             <div className="flex items-start">
@@ -263,23 +255,20 @@ export default function PushNotificationPermission({
     )
   }
 
-  // Settings panel (inline for settings page)
+  // settings panel
   if (showSettings && isSubscribed) {
     return (
       <div className={`bg-green-50 border border-green-200 rounded-lg p-4 ${className}`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium text-green-800">
-                การแจ้งเตือนเปิดใช้งานแล้ว
-              </p>
-            </div>
+            <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <p className="ml-3 text-sm font-medium text-green-800">
+              การแจ้งเตือนเปิดใช้งานแล้ว
+            </p>
           </div>
+
           <div className="flex space-x-2">
             <button
               onClick={handleTestNotification}
@@ -287,6 +276,7 @@ export default function PushNotificationPermission({
             >
               ทดสอบ
             </button>
+
             <button
               onClick={handleUnsubscribe}
               disabled={isLoading}
