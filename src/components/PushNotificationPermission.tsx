@@ -9,7 +9,6 @@ interface PushNotificationPermissionProps {
   onPermissionDenied?: () => void
   showSettings?: boolean
   className?: string
-  // ⭐ เพิ่ม option ไว้เรียก popup จากภายนอกได้
   autoOpenPrompt?: boolean
 }
 
@@ -20,7 +19,7 @@ export default function PushNotificationPermission({
   className = '',
   autoOpenPrompt = false
 }: PushNotificationPermissionProps) {
-  
+
   const { isAuthenticated } = useAuth()
   const {
     isSupported,
@@ -37,7 +36,7 @@ export default function PushNotificationPermission({
   const [showPermissionPrompt, setShowPermissionPrompt] = useState(false)
   const [showSettingsPanel, setShowSettingsPanel] = useState(false)
 
-  // ⭐ อนุญาตเปิด popup เมื่อผู้ใช้กดเรียกเองเท่านั้น
+  // Allow the popup to open only when the user manually triggers it
   const openPermissionPopup = () => {
     setShowPermissionPrompt(true)
   }
@@ -78,10 +77,10 @@ export default function PushNotificationPermission({
     setShowSettingsPanel(false)
   }
 
-  // ไม่รองรับ push
+  // Not supported
   if (!isSupported) return null
 
-  // ⭐ modal ขออนุญาต (แสดงเมื่อกดเรียก)
+  // Permission request modal
   if (showPermissionPrompt && permission === 'default') {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -93,17 +92,16 @@ export default function PushNotificationPermission({
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
           <div className="p-6">
             <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              <svg className="h-6 w-6 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
-              </div>
+
               <div className="ml-4 flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  เปิดใช้งานการแจ้งเตือน
+                  Enable Notifications
                 </h3>
                 <p className="text-sm text-gray-600 mb-6">
-                  รับการแจ้งเตือนเมื่อมีเหตุการณ์สำคัญในระบบ เช่น เซ็นเซอร์ผิดปกติ หรือการอัปเดตบ่อกุ้ง
+                  Receive alerts for important events such as abnormal sensor readings or pond updates.
                 </p>
                 <div className="flex space-x-3">
                   <button
@@ -111,13 +109,13 @@ export default function PushNotificationPermission({
                     disabled={isLoading}
                     className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    {isLoading ? 'กำลังตั้งค่า...' : 'อนุญาต'}
+                    {isLoading ? 'Setting up...' : 'Allow'}
                   </button>
                   <button
                     onClick={handleClose}
                     className="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
                   >
-                    ไม่ตอนนี้
+                    Not now
                   </button>
                 </div>
               </div>
@@ -128,7 +126,7 @@ export default function PushNotificationPermission({
     )
   }
 
-  // ⭐ modal ถ้า user ปฏิเสธ (permission = denied)
+  // Permission denied modal
   if (permission === 'denied') {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -140,24 +138,23 @@ export default function PushNotificationPermission({
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
           <div className="p-6">
             <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-              </div>
+              <svg className="h-6 w-6 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+
               <div className="ml-4 flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  การแจ้งเตือนถูกปฏิเสธ
+                  Notification Permission Denied
                 </h3>
                 <p className="text-sm text-gray-600 mb-6">
-                  กรุณาเปิดใช้งานการแจ้งเตือนในเบราว์เซอร์เพื่อรับการแจ้งเตือนจากระบบ
+                  Please enable notifications in your browser settings to receive alerts.
                 </p>
                 <div className="flex justify-end">
                   <button
                     onClick={handleClose}
                     className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
                   >
-                    ตกลง
+                    OK
                   </button>
                 </div>
               </div>
@@ -168,7 +165,7 @@ export default function PushNotificationPermission({
     )
   }
 
-  // ⭐ modal แนะนำ subscribe หลังอนุญาตแล้ว
+  // Permission granted but not subscribed modal
   if (permission === 'granted' && !isSubscribed) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -180,17 +177,16 @@ export default function PushNotificationPermission({
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
           <div className="p-6">
             <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-              </div>
+              <svg className="h-6 w-6 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+
               <div className="ml-4 flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  การแจ้งเตือน
+                  Notification Setup
                 </h3>
                 <p className="text-sm text-gray-600 mb-6">
-                  โปรดคลิกปุ่ม "อนุญาต" เพื่อรับการแจ้งเตือนจากระบบ
+                  Please click "Allow" to complete notification setup.
                 </p>
                 <div className="flex space-x-3">
                   <button
@@ -198,13 +194,13 @@ export default function PushNotificationPermission({
                     disabled={isLoading}
                     className="flex-1 bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    {isLoading ? 'กำลังอนุญาติ...' : 'อนุญาต'}
+                    {isLoading ? 'Processing...' : 'Allow'}
                   </button>
                   <button
                     onClick={handleClose}
                     className="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
                   >
-                    ไม่ตอนนี้
+                    Not now
                   </button>
                 </div>
               </div>
@@ -215,7 +211,7 @@ export default function PushNotificationPermission({
     )
   }
 
-  // error modal
+  // Error modal
   if (error) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -227,14 +223,13 @@ export default function PushNotificationPermission({
         <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
           <div className="p-6">
             <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-              </div>
+              <svg className="h-6 w-6 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+
               <div className="ml-4 flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  เกิดข้อผิดพลาด
+                  Error
                 </h3>
                 <p className="text-sm text-gray-600 mb-6">
                   {error}
@@ -244,7 +239,7 @@ export default function PushNotificationPermission({
                     onClick={handleClose}
                     className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
                   >
-                    ตกลง
+                    OK
                   </button>
                 </div>
               </div>
@@ -255,7 +250,7 @@ export default function PushNotificationPermission({
     )
   }
 
-  // settings panel
+  // Settings panel
   if (showSettings && isSubscribed) {
     return (
       <div className={`bg-green-50 border border-green-200 rounded-lg p-4 ${className}`}>
@@ -265,7 +260,7 @@ export default function PushNotificationPermission({
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
             <p className="ml-3 text-sm font-medium text-green-800">
-              การแจ้งเตือนเปิดใช้งานแล้ว
+              Notifications are enabled
             </p>
           </div>
 
@@ -274,7 +269,7 @@ export default function PushNotificationPermission({
               onClick={handleTestNotification}
               className="bg-green-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-green-700"
             >
-              ทดสอบ
+              Test
             </button>
 
             <button
@@ -282,7 +277,7 @@ export default function PushNotificationPermission({
               disabled={isLoading}
               className="bg-red-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-red-700 disabled:opacity-50"
             >
-              {isLoading ? 'กำลังยกเลิก...' : 'ยกเลิก'}
+              {isLoading ? 'Processing...' : 'Unsubscribe'}
             </button>
           </div>
         </div>
