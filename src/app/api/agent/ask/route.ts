@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 // ✅ Schema สำหรับ validate request body
 const requestSchema = z.object({
-  question: z.string().min(1, 'กรุณาพิมพ์คำถาม'),
+  question: z.string().min(1, 'Please enter your question.'),
   pondId: z.string().optional(),
   pondData: z.object({}).passthrough().optional(),
 })
@@ -11,19 +11,19 @@ const requestSchema = z.object({
 
 // ✅ Helper: จัดรูปข้อมูลบ่อให้อ่านง่าย
 function formatPondData(pondData: any) {
-  if (!pondData) return 'ไม่มีข้อมูลบ่อ'
+  if (!pondData) return 'No data pond'
 
   return `
-- ชื่อบ่อ: ${pondData?.name ?? 'ไม่ระบุ'}
-- ขนาดบ่อ: ${pondData?.size ?? 'ไม่ระบุ'} ไร่
-- วันที่ลงบ่อ: ${pondData?.date ?? 'ไม่ระบุ'}
-- ขนาด ก x ย: ${pondData?.dimensions ?? 'ไม่ระบุ'}
-- ความลึกบ่อ: ${pondData?.depth ?? 'ไม่ระบุ'} เมตร
-- จำนวนลูกกุ้งที่ปล่อย: ${pondData?.shrimp_count ?? 'ไม่ระบุ'} ตัว
-- ที่ตั้งบ่อ: ${pondData?.location ?? 'ไม่ระบุ'}
-- หมายเหตุ: ${pondData?.notes ?? 'ไม่มี'}
-- วันที่สร้างบ่อ: ${pondData?.created_at ? new Date(pondData.created_at).toLocaleDateString('th-TH') : 'ไม่ระบุ'}
-- วันที่อัปเดตล่าสุด: ${pondData?.updated_at ? new Date(pondData.updated_at).toLocaleDateString('th-TH') : 'ไม่ระบุ'}
+- Pond: ${pondData?.name ?? 'Not specified'}
+- Pond size: ${pondData?.size ?? 'Not specified'} farm
+- Pond stocking date: ${pondData?.date ?? 'Not specified'}
+- Size Width × Length: ${pondData?.dimensions ?? 'Not specified'}
+- Pond depth: ${pondData?.depth ?? 'Not specified'} meter
+- Shrimp stocked: ${pondData?.shrimp_count ?? 'Not specified'} shrimp
+- Pond location: ${pondData?.location ?? 'Not specified'}
+- Notes: ${pondData?.notes ?? 'Not specified'}
+- Pond created date: ${pondData?.created_at ? new Date(pondData.created_at).toLocaleDateString('th-TH') : 'Not specified'}
+- Last updated date: ${pondData?.updated_at ? new Date(pondData.updated_at).toLocaleDateString('th-TH') : 'Not specified'}
 `
 }
 
@@ -42,50 +42,51 @@ export async function POST(request: NextRequest) {
       environment: process.env.NODE_ENV
     })
     
-    if (!apiKey) {
-      console.log('❌ DEEPSEEK_API_KEY not found in environment variables')
-      // ส่ง fallback response แทน error
-      return NextResponse.json({
-        success: true,
-        data: { 
-          answer: `สวัสดีครับ! ผมคือผู้ช่วย AI สำหรับการเลี้ยงกุ้ง
+if (!apiKey) {
+  console.log('❌ DEEPSEEK_API_KEY not found in environment variables')
+  // ส่ง fallback response แทน error
+  return NextResponse.json({
+    success: true,
+    data: { 
+      answer: `Hello! I am an AI assistant for shrimp farming.
 
-ข้อมูลบ่อปัจจุบัน:
-- ชื่อบ่อ: ${pondData?.name || 'ไม่ระบุ'}
-- ขนาดบ่อ: ${pondData?.size || 'ไม่ระบุ'} ไร่
-- จำนวนกุ้ง: ${pondData?.shrimp_count || 'ไม่ระบุ'} ตัว
+Current pond information:
+- Pond name: ${pondData?.name || 'Not specified'}
+- Pond size: ${pondData?.size || 'Not specified'} rai
+- Shrimp count: ${pondData?.shrimp_count || 'Not specified'}
 
-คำถาม: ${question}
+Question: ${question}
 
-คำตอบ: ขออภัยครับ ตอนนี้ระบบ AI ยังไม่พร้อมใช้งาน แต่ผมสามารถให้คำแนะนำทั่วไปเกี่ยวกับการเลี้ยงกุ้งได้:
+Answer: Sorry, the AI system is currently unavailable. However, here is some general advice on shrimp farming:
 
-- ควรตรวจสอบคุณภาพน้ำเป็นประจำ
-- ให้อาหารกุ้งในปริมาณที่เหมาะสม
-- ระวังโรคและศัตรูพืช
-- เปลี่ยนน้ำตามกำหนด
+- Regularly check water quality
+- Feed the shrimp with an appropriate amount of food
+- Watch out for diseases and predators
+- Change the water as scheduled
 
-หากต้องการคำแนะนำเฉพาะเจาะจง กรุณาติดต่อผู้เชี่ยวชาญครับ`
-        }
-      })
+For more specific recommendations, please contact a specialist.`
     }
+  })
+}
+
 
     // 3) สร้าง context
-    const context = `
-คุณคือผู้ช่วย AI ที่เชี่ยวชาญด้านการเลี้ยงกุ้งและบ่อเลี้ยงกุ้ง
+const context = `
+You are an AI assistant specialized in shrimp farming and pond management.
 
-ข้อมูลบ่อปัจจุบัน (ID: ${pondId ?? 'ไม่ระบุ'}):
+Current pond information (ID: ${pondId ?? 'Not specified'}):
 ${formatPondData(pondData)}
 
-คำแนะนำในการตอบ:
-- ตอบเป็นภาษาไทยที่เข้าใจง่ายสำหรับเกษตรกร
-- ใช้การเว้นวรรคที่เหมาะสม (เว้นบรรทัดระหว่างหัวข้อ)
-- หลีกเลี่ยงการใช้ ** หรือ * มากเกินไป
-- ให้คำแนะนำที่กระชับและเป็นประโยชน์
-- จำกัดความยาวคำตอบไม่เกิน 300 คำ
-- ใช้ bullet points (-) แทน ** หรือ *
-- ตอบแบบเป็นมิตรและให้กำลังใจ
+Guidelines for your response:
+- Answer in clear, simple English suitable for farmers
+- Keep the formatting clean (use line breaks between sections)
+- Avoid excessive use of bold or special characters
+- Provide concise and practical advice
+- Limit your response to a maximum of 300 words
+- Use bullet points (-) for lists
+- Maintain a friendly and supportive tone
 
-คำถาม: ${question}
+User question: ${question}
 `
 
     // 🔍 log context เฉพาะ dev
@@ -111,7 +112,7 @@ ${formatPondData(pondData)}
           messages: [
             {
               role: 'system',
-              content: 'คุณคือผู้ช่วย AI ที่เชี่ยวชาญด้านการเลี้ยงกุ้งและบ่อเลี้ยงกุ้ง ตอบเป็นภาษาไทยที่เข้าใจง่ายสำหรับเกษตรกร'
+              content: 'You are an AI assistant specializing in shrimp farming and pond management. Respond in clear, simple English that farmers can easily understand.'
             },
             {
               role: 'user',
@@ -141,68 +142,68 @@ ${formatPondData(pondData)}
       console.log('Gemini API error response:', errText)
       
       // ถ้าไม่มี API key หรือ API key ไม่ถูกต้อง ให้ส่ง fallback response
-      if (response.status === 400 || response.status === 403) {
-        return NextResponse.json({
-          success: true,
-          data: { 
-            answer: `สวัสดีครับ! ผมคือผู้ช่วย AI สำหรับการเลี้ยงกุ้ง
+if (response.status === 400 || response.status === 403) {
+  return NextResponse.json({
+    success: true,
+    data: { 
+      answer: `Hello! I am an AI assistant for shrimp farming.
 
-ข้อมูลบ่อปัจจุบัน:
-- ชื่อบ่อ: ${pondData?.name || 'ไม่ระบุ'}
-- ขนาดบ่อ: ${pondData?.size || 'ไม่ระบุ'} ไร่
-- จำนวนกุ้ง: ${pondData?.shrimp_count || 'ไม่ระบุ'} ตัว
+Current pond information:
+- Pond name: ${pondData?.name || 'Not specified'}
+- Pond size: ${pondData?.size || 'Not specified'} rai
+- Shrimp count: ${pondData?.shrimp_count || 'Not specified'}
 
-คำถาม: ${question}
+Question: ${question}
 
-คำตอบ: ขออภัยครับ ตอนนี้ระบบ AI ยังไม่พร้อมใช้งาน แต่ผมสามารถให้คำแนะนำทั่วไปเกี่ยวกับการเลี้ยงกุ้งได้:
+Answer: Sorry, the AI system is currently unavailable. However, here are some general recommendations for shrimp farming:
 
-- ควรตรวจสอบคุณภาพน้ำเป็นประจำ
-- ให้อาหารกุ้งในปริมาณที่เหมาะสม
-- ระวังโรคและศัตรูพืช
-- เปลี่ยนน้ำตามกำหนด
+- Regularly check water quality
+- Feed shrimp with an appropriate amount of feed
+- Watch out for diseases and predators
+- Change the water as scheduled
 
-หากต้องการคำแนะนำเฉพาะเจาะจง กรุณาติดต่อผู้เชี่ยวชาญครับ`
-          }
-        })
-      }
-      
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            message: 'AI API เรียกใช้งานไม่สำเร็จ',
-            code: response.status,
-            details: errText,
-          },
-        },
-        { status: 500 }
-      )
+For more specific advice, please contact a specialist.`
     }
+  })
+}
 
-    const data = await response.json()
-    const answer =
-      data.choices?.[0]?.message?.content ||
-      'ไม่สามารถสร้างคำตอบได้'
+return NextResponse.json(
+  {
+    success: false,
+    error: {
+      message: 'Failed to call the AI API',
+      code: response.status,
+      details: errText,
+    },
+  },
+  { status: 500 }
+)
+}
 
-    // 6) ส่งกลับ standardized response
-    return NextResponse.json({
-      success: true,
-      data: { answer },
-    })
-  } catch (error) {
-    console.log('Error in POST /api/agent:', error)
+const data = await response.json()
+const answer =
+  data.choices?.[0]?.message?.content ||
+  'Unable to generate an answer'
 
-    return NextResponse.json(
-      {
-        success: false,
-        error: {
-          message:
-            error instanceof Error ? error.message : 'Unknown error occurred',
-          code: 500,
-          environment: process.env.NODE_ENV,
-        },
+// 6) ส่งกลับ standardized response
+return NextResponse.json({
+  success: true,
+  data: { answer },
+})
+} catch (error) {
+  console.log('Error in POST /api/agent:', error)
+
+  return NextResponse.json(
+    {
+      success: false,
+      error: {
+        message:
+          error instanceof Error ? error.message : 'Unknown error occurred',
+        code: 500,
+        environment: process.env.NODE_ENV,
       },
-      { status: 500 }
-    )
-  }
+    },
+    { status: 500 }
+  )
+}
 }
