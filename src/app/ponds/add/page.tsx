@@ -78,15 +78,15 @@ export default function AddPondPage() {
   const validateForm = (): boolean => {
     const newErrors: Partial<PondFormData> = {}
     
-    if (!formData.date.trim()) newErrors.date = 'กรุณาเลือกวันที่'
-    if (!formData.size.trim()) newErrors.size = 'กรุณากรอกขนาดบ่อ'
-    if (!formData.depth.trim()) newErrors.depth = 'กรุณากรอกความลึก'
+    if (!formData.date.trim()) newErrors.date = 'Please select date'
+    if (!formData.size.trim()) newErrors.size = 'Please enter pond size'
+    if (!formData.depth.trim()) newErrors.depth = 'Please enter depth'
     
     // ตรวจสอบ dimensions - ต้องมีทั้งกว้างและยาว
     if (!dimensionsInput.width.trim()) {
-      newErrors.dimensions = 'กรุณากรอกความกว้าง'
+      newErrors.dimensions = 'Please Enter wide'
     } else if (!dimensionsInput.length.trim()) {
-      newErrors.dimensions = 'กรุณากรอกความยาว'
+      newErrors.dimensions = 'Please enter long'
     }
     
     // shrimp_count is optional - no validation needed
@@ -112,7 +112,7 @@ export default function AddPondPage() {
     try {
       // สร้างชื่อบ่อตามลำดับ
       const pondNumber = existingPonds.length + 1
-      const pondName = `บ่อที่ ${pondNumber}`
+      const pondName = `Pond ${pondNumber}`
       
       const pondData: CreatePondRequest = {
         name: pondName,
@@ -121,17 +121,17 @@ export default function AddPondPage() {
         dimensions: formData.dimensions,
         depth: parseFloat(formData.depth) || 0,
         shrimp_count: parseInt(formData.shrimp_count) || 0,
-        notes: `บ่อขนาด ${formData.size} ไร่ สร้างเมื่อ ${formData.date} จำนวนลูกกุ้ง ${formData.shrimp_count} ตัว`
+        notes: `Pond size ${formData.size} rai `Created on ${formData.date}, stocked ${formData.shrimp_count} shrimp`
       }
 
       // Sending pond data to backend
       
       await createPondMutation.mutateAsync(pondData)
       
-      alert('เพิ่มบ่อใหม่เรียบร้อยแล้ว')
+      alert('New pond added successfully.')
       router.push('/ponds')
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'เกิดข้อผิดพลาดในการเพิ่มบ่อ'
+      const errorMessage = error instanceof Error ? error.message : 'Error add pond'
       alert(errorMessage)
     } finally {
       setIsSubmitting(false)
@@ -171,7 +171,7 @@ export default function AddPondPage() {
                 <input
                   type="date"
                   className={`date-input ${errors.date ? 'error' : ''}`}
-                  placeholder="โปรดเลือกวันที่"
+                  placeholder="Please select date"
                   value={formData.date}
                   onChange={(e) => handleInputChange('date', e.target.value)}
                   required
@@ -186,7 +186,7 @@ export default function AddPondPage() {
                   type="number"
                   step="0.1"
                   className={`text-input ${errors.size ? 'error' : ''}`}
-                  placeholder="ขนาดบ่อ (ไร่)"
+                  placeholder="Size pond (rai)"
                   value={formData.size}
                   onChange={(e) => handleInputChange('size', e.target.value)}
                   required
@@ -201,7 +201,7 @@ export default function AddPondPage() {
                   <input
                     type="text"
                     className="dimensions-input"
-                    placeholder="ขนาดบ่อ กว้าง x ยาว"
+                    placeholder="Size pond wide * long"
                     value={dimensionsInput.width}
                     onChange={(e) => handleDimensionsChange('width', e.target.value)}
                     required
@@ -228,7 +228,7 @@ export default function AddPondPage() {
                   type="number"
                   step="0.1"
                   className={`text-input ${errors.depth ? 'error' : ''}`}
-                  placeholder="ความลึกของบ่อ (เมตร)"
+                  placeholder="Pond depth (Meter)"
                   value={formData.depth}
                   onChange={(e) => handleInputChange('depth', e.target.value)}
                   required
@@ -243,7 +243,7 @@ export default function AddPondPage() {
                   type="number"
                   min="0"
                   className={`text-input ${errors.shrimp_count ? 'error' : ''}`}
-                  placeholder="จำนวนลูกกุ้งที่ปล่อย (ตัว)"
+                  placeholder="Shrimp stocked (count)"
                   value={formData.shrimp_count}
                   onChange={(e) => handleInputChange('shrimp_count', e.target.value)}
                   required
@@ -260,7 +260,7 @@ export default function AddPondPage() {
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'กำลังเพิ่มบ่อ...' : 'เพิ่มบ่อ'}
+            {isSubmitting ? 'Adding pond...' : 'Add pond'}
           </button>
           <div className="spacer"></div>
         </div>
