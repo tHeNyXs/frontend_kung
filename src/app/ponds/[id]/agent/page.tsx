@@ -274,7 +274,7 @@ export default function AgentPage() {
           </div>
           <div className="header-title">
             <h1 className="font-bold text-lg leading-6 text-[#1c170d] text-center m-0">
-              สวัสดี! เราคือผู้ช่วย AI
+              Hello! I’m your AI assistant.
             </h1>
           </div>
         </div>
