@@ -101,7 +101,7 @@ const SensorGraph: React.FC<SensorGraphProps> = ({
               data.status === 'red' ? 'text-red-600' : 
               data.status === 'gray' ? 'text-gray-500' : 'text-gray-600'
             }`}>
-              {data.status === 'gray' ? 'รอข้อมูล' : data.status}
+              {data.status === 'gray' ? 'Wait Data' : data.status}
             </span>
           </p>
         </div>
@@ -130,9 +130,9 @@ const SensorGraph: React.FC<SensorGraphProps> = ({
           </div>
           <div className="text-sm text-gray-500">
             {data.sensor_type?.includes('Shrimp Size') ? 'Last 30D' : 
-             (data as any).timeframe === '1D' ? 'วันนี้' :
-             (data as any).timeframe === '7D' ? '7 วันที่ผ่านมา' :
-             (data as any).timeframe === '30D' ? '30 วันที่ผ่านมา' : 'Last 24h'}
+             (data as any).timeframe === '1D' ? 'Today' :
+             (data as any).timeframe === '7D' ? '7 days ago' :
+             (data as any).timeframe === '30D' ? '30 days ago' : 'Last 24h'}
           </div>
         </div>
         
