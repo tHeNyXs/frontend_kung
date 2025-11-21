@@ -29,13 +29,14 @@ export async function POST(
     }
     
     // Status messages mapping
-    const statusMessages = {
-      1: 'กำลังเตรียมกล้องถ่ายรูป....',
-      2: 'กำลังเริ่มยกยอขึ้น....',
-      3: 'ถ่ายสำเร็จ...',
-      4: 'กรุณารอข้อมูลสักครู่...',
-      5: 'สำเร็จ!!....'
-    };
+  const statusMessages = {
+    1: 'Preparing the camera...',
+    2: 'Starting to lift the net...',
+    3: 'Capture successful...',
+    4: 'Please wait for the data...',
+    5: 'Completed!!'
+  };
+
     
     const statusData = {
       pondId: parseInt(pondId),
