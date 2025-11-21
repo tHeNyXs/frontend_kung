@@ -180,7 +180,7 @@ export default function ForgetPasswordPage() {
               </div>
             </div>
             <div className="title-container">
-              <h1>กู้รหัสผ่าน</h1>
+              <h1>Password recovery</h1>
             </div>
           </div>
         </div>
@@ -192,11 +192,11 @@ export default function ForgetPasswordPage() {
             <div className="input-section">
               <div className="input-wrapper">
                 <div className="input-field">
-                  <label className="input-label">เบอร์ผู้ใช้</label>
+                  <label className="input-label">Phone number</label>
                   <div className="input-container">
                     <input 
                       type="tel" 
-                      placeholder="กรอกเบอร์ของผู้ใช้" 
+                      placeholder="Please enter phone number" 
                       className="phone-input"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
@@ -214,7 +214,7 @@ export default function ForgetPasswordPage() {
                 className="send-button" 
                 disabled={isLoading}
               >
-                {isLoading ? 'กำลังส่ง...' : 'ส่งรหัสผ่านไปที่เบอร์'}
+                {isLoading ? 'sending...' : 'Send password to SMS'}
               </button>
             </div>
           </form>
