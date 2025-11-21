@@ -98,16 +98,16 @@ export default function ShrimpPondsPage() {
 
         {/* Title Section */}
         <div className="title-section">
-          <h1>บ่อ</h1>
+          <h1>Pond</h1>
         </div>
 
         {/* Pond List */}
         <div className="pond-list">
           {!ponds || ponds.length === 0 ? (
             <div className="empty-state">
-              <p>ยังไม่มีบ่อในระบบ</p>
+              <p>No ponds found.</p>
               <button className="add-first-pond-btn" onClick={addPond}>
-                เพิ่มบ่อแรก
+                Add the first pond.
               </button>
             </div>
           ) : (
@@ -157,7 +157,7 @@ export default function ShrimpPondsPage() {
                     e.stopPropagation()
                     deletePond(pond.id, pond.name)
                   }}
-                  title="ลบบ่อ"
+                  title="Delete pond"
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M12 4L4 12M4 4L12 12" stroke="#DC2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -166,9 +166,9 @@ export default function ShrimpPondsPage() {
               </div>
             )) : (
               <div className="empty-state">
-                <p>ยังไม่มีบ่อในระบบ</p>
+                <p>No ponds found.</p>
                 <button className="add-first-pond-btn" onClick={addPond}>
-                  เพิ่มบ่อแรก
+                  Add the first pond
                 </button>
               </div>
             )
