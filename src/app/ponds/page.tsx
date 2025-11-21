@@ -69,8 +69,10 @@ export default function ShrimpPondsPage() {
   return (
     <div className="shrimp-ponds-container">
       <div className="main-frame">
+
         {/* Push Notification Permission Modal */}
         <PushNotificationPermission 
+          showSettings={false}
           onPermissionGranted={() => {
             console.log('Push notification permission granted')
           }}
@@ -78,7 +80,7 @@ export default function ShrimpPondsPage() {
             console.log('Push notification permission denied')
           }}
         />
-        
+
         {/* Header */}
         <div className="header">
           <div className="header-content">
@@ -117,6 +119,7 @@ export default function ShrimpPondsPage() {
                   <div className="pond-info">
                     <div className="flex items-center justify-between">
                       <h3 className="pond-title">{pond.name}</h3>
+
                       {/* Alert Badge */}
                       {user && (
                         <AlertBadge
@@ -127,6 +130,7 @@ export default function ShrimpPondsPage() {
                         />
                       )}
                     </div>
+
                     <div className="pond-details">
                       <div className="detail-row">
                         <span className="detail-label">POND SIZE:</span>
@@ -151,6 +155,7 @@ export default function ShrimpPondsPage() {
                     </div>
                   </div>
                 </div>
+
                 <button 
                   className="delete-pond-btn"
                   onClick={(e) => {
