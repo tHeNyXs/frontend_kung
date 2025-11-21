@@ -35,7 +35,7 @@ export default function NotificationSettingsPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['push-settings'] })
-      setSuccess('บันทึกการตั้งค่าเรียบร้อยแล้ว')
+      setSuccess('Settings saved successfully.')
       setError(null)
       setTimeout(() => setSuccess(null), 3000)
     },
@@ -60,8 +60,8 @@ export default function NotificationSettingsPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">กรุณาเข้าสู่ระบบ</h1>
-          <p className="text-gray-600">คุณต้องเข้าสู่ระบบเพื่อดูการตั้งค่าการแจ้งเตือน</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Please login</h1>
+          <p className="text-gray-600">Please log in to view your notification settings.</p>
         </div>
       </div>
     )
@@ -72,23 +72,23 @@ export default function NotificationSettingsPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">การตั้งค่าการแจ้งเตือน</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Notification settings</h1>
           <p className="mt-2 text-gray-600">
-            จัดการการแจ้งเตือนและความชอบส่วนตัวของคุณ
+            Manage notifications and preferences.
           </p>
         </div>
 
         {/* Push Notification Permission */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">การแจ้งเตือน Push</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Push Notification</h2>
           <PushNotificationPermission 
             showSettings={true}
             onPermissionGranted={() => {
-              setSuccess('เปิดใช้งานการแจ้งเตือนเรียบร้อยแล้ว')
+              setSuccess('Notifications enabled.')
               setTimeout(() => setSuccess(null), 3000)
             }}
             onPermissionDenied={() => {
-              setError('การแจ้งเตือนถูกปฏิเสธ')
+              setError('Notification denied.')
               setTimeout(() => setError(null), 3000)
             }}
           />
@@ -98,9 +98,9 @@ export default function NotificationSettingsPage() {
         {settings && (
           <div className="bg-white shadow rounded-lg">
             <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">การตั้งค่าการแจ้งเตือน</h2>
+              <h2 className="text-xl font-semibold text-gray-900">Notification settings</h2>
               <p className="mt-1 text-sm text-gray-600">
-                เลือกประเภทการแจ้งเตือนที่คุณต้องการรับ
+                Choose your notification types.
               </p>
             </div>
             
@@ -108,9 +108,9 @@ export default function NotificationSettingsPage() {
               {/* Sensor Alerts */}
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900">แจ้งเตือนเซ็นเซอร์</h3>
+                  <h3 className="text-lg font-medium text-gray-900">Sensor notification</h3>
                   <p className="text-sm text-gray-600">
-                    รับการแจ้งเตือนเมื่อเซ็นเซอร์แสดงค่าผิดปกติ เช่น อุณหภูมิสูงเกินไป หรือ pH ต่ำ
+                   Get alerts when sensors detect abnormal values (e.g., high temperature or low pH).
                   </p>
                 </div>
                 <button
@@ -131,9 +131,9 @@ export default function NotificationSettingsPage() {
               {/* Pond Updates */}
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900">อัปเดตบ่อกุ้ง</h3>
+                  <h3 className="text-lg font-medium text-gray-900">Update Pond</h3>
                   <p className="text-sm text-gray-600">
-                    รับการแจ้งเตือนเมื่อมีการอัปเดตข้อมูลบ่อกุ้ง เช่น การเพิ่มบ่อใหม่หรือแก้ไขข้อมูล
+                    Receive notifications when shrimp pond data is updated, such as when a new pond is added or existing information is edited.
                   </p>
                 </div>
                 <button
@@ -154,7 +154,7 @@ export default function NotificationSettingsPage() {
               {/* System Notifications */}
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900">การแจ้งเตือนระบบ</h3>
+                  <h3 className="text-lg font-medium text-gray-900">System notification</h3>
                   <p className="text-sm text-gray-600">
                     รับการแจ้งเตือนเกี่ยวกับระบบ เช่น การอัปเดตแอปพลิเคชันหรือการบำรุงรักษา
                   </p>
@@ -177,7 +177,7 @@ export default function NotificationSettingsPage() {
               {/* Maintenance Alerts */}
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900">แจ้งเตือนการบำรุงรักษา</h3>
+                  <h3 className="text-lg font-medium text-gray-900">Maintenance reminder</h3>
                   <p className="text-sm text-gray-600">
                     รับการแจ้งเตือนเมื่อถึงเวลาบำรุงรักษาอุปกรณ์หรือระบบ
                   </p>
