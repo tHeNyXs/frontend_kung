@@ -121,7 +121,7 @@ export default function AddPondPage() {
         dimensions: formData.dimensions,
         depth: parseFloat(formData.depth) || 0,
         shrimp_count: parseInt(formData.shrimp_count) || 0,
-        notes: `Pond size ${formData.size} rai `Created on ${formData.date}, stocked ${formData.shrimp_count} shrimp`
+        notes: `Pond size ${formData.size} rai • Created on ${formData.date}, stocked ${formData.shrimp_count} shrimp`
       }
 
       // Sending pond data to backend
