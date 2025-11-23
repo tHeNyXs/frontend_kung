@@ -158,7 +158,7 @@ export default function AddPondPage() {
                 </div>
               </div>
               <div className="title-container">
-                <h1>เพิ่มบ่อ</h1>
+                <h1>Add pond</h1>
               </div>
             </div>
           </div>
