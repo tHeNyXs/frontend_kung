@@ -170,7 +170,7 @@ export default function GraphPage() {
                     onClick={() => window.location.reload()} 
                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                   >
-                    ลองใหม่
+                    Try again
                   </button>
                 </div>
               ) : sensor.data && sensor.data.sensor_data ? (
@@ -197,7 +197,7 @@ export default function GraphPage() {
           {/* Header with Title and Timeframe Selector */}
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-lg text-gray-800">
-              ขนาดกุ้ง (CM)
+              Shrimp size (CM)
             </h3>
             <TimeframeSelector
               selectedTimeframe={timeframes.shrimpSize}
@@ -222,7 +222,7 @@ export default function GraphPage() {
                 onClick={() => window.location.reload()} 
                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               >
-                ลองใหม่
+                Try again
               </button>
             </div>
           ) : shrimpSizeData && (shrimpSizeData as any).sensor_data ? (
