@@ -156,7 +156,7 @@ export default function NotificationSettingsPage() {
                 <div className="flex-1">
                   <h3 className="text-lg font-medium text-gray-900">System notification</h3>
                   <p className="text-sm text-gray-600">
-                    รับการแจ้งเตือนเกี่ยวกับระบบ เช่น การอัปเดตแอปพลิเคชันหรือการบำรุงรักษา
+                    Get system updates and maintenance alerts.
                   </p>
                 </div>
                 <button
@@ -179,7 +179,7 @@ export default function NotificationSettingsPage() {
                 <div className="flex-1">
                   <h3 className="text-lg font-medium text-gray-900">Maintenance reminder</h3>
                   <p className="text-sm text-gray-600">
-                    รับการแจ้งเตือนเมื่อถึงเวลาบำรุงรักษาอุปกรณ์หรือระบบ
+                    Get alerts when your devices or system need maintenance.
                   </p>
                 </div>
                 <button
