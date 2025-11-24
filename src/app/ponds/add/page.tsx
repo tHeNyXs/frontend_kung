@@ -272,7 +272,7 @@ export default function AddPondPage() {
           <div className="popup-content">
             <div className="loading-spinner"></div>
             <div className="loading-text">
-              กำลังโหลด<span className="loading-dots"></span>
+              Downloading<span className="loading-dots"></span>
             </div>
           </div>
         </div>
