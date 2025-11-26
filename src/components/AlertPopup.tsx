@@ -138,7 +138,7 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
           <div className="flex items-center justify-center space-x-3">
             <div className="text-3xl">🚨</div>
             <h3 className="text-2xl font-bold text-[#1c170d]">
-              แจ้งเตือนบ่อที่ {pondId}
+              Notification for Pond {pondId}
             </h3>
           </div>
         </div>
