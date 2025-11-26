@@ -211,10 +211,10 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
                 <div className="space-y-2">
                   <div className="text-xl sm:text-2xl animate-bounce">🎉</div>
                   <div className="text-green-600 font-bold text-base sm:text-lg">
-                    กระบวนการยกยอเสร็จสิ้น!
+                    The lift-net process is complete!
                   </div>
                   <div className="text-xs sm:text-sm text-gray-600">
-                    กำลังปิดหน้าต่าง...
+                    Closing Please wait....
                   </div>
                 </div>
               ) : (
@@ -223,7 +223,7 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
                   <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full animate-pulse delay-100" />
                   <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full animate-pulse delay-200" />
                   <span className="text-gray-600 font-medium ml-2 text-sm sm:text-base">
-                    กรุณารอสักครู่...
+                    Closing the window Please wait....
                   </span>
                 </div>
               )}
